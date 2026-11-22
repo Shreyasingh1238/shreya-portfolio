@@ -8,6 +8,9 @@ body {
   transition: transform 500ms cubic-bezier(.2,.8,.2,1), box-shadow 500ms ease;
   will-change: transform;
 }
+/* Layers move at different rates while the hero scrolls out of view. */
+.hero-copy { transform: translateY(var(--hero-foreground-y, 0px)); }
+.hero-art { transform: translateY(var(--hero-background-y, 0px)); }
 .hero-art .orbit-one {
   transform: translate(calc(var(--pointer-x, 0px) * -.35), calc(var(--pointer-y, 0px) * -.35));
   transition: transform 800ms cubic-bezier(.2,.8,.2,1);
@@ -48,6 +51,7 @@ html::-webkit-scrollbar { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   body { background-attachment: scroll; }
+  .hero-copy, .hero-art { transform: none; }
   .hero-art .art-center, .hero-art .orbit-one, .project:hover, .project:focus-within, .skill:hover, .service-list > div:hover svg { transform: none; }
   .hero-art .art-center, .hero-art .orbit-one { transition: none; will-change: auto; }
   .scroll-entered { animation: none; }

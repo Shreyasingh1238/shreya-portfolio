@@ -29,6 +29,9 @@ function App() {
       if (frame || reducedMotion.matches) return;
       frame = requestAnimationFrame(() => {
         document.documentElement.style.setProperty('--scroll-glow', Math.min(window.scrollY * 0.12, 500) + 'px');
+        const heroScroll = Math.min(window.scrollY, window.innerHeight);
+        document.documentElement.style.setProperty('--hero-foreground-y', heroScroll * -0.18 + 'px');
+        document.documentElement.style.setProperty('--hero-background-y', heroScroll * 0.32 + 'px');
         frame = 0;
       });
     };
@@ -66,6 +69,8 @@ function App() {
       window.removeEventListener('blur', resetLogo);
       cancelAnimationFrame(frame);
       document.documentElement.style.removeProperty('--scroll-glow');
+      document.documentElement.style.removeProperty('--hero-foreground-y');
+      document.documentElement.style.removeProperty('--hero-background-y');
     };
   }, []);
   const [menu, setMenu] = useState(false),
