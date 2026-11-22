@@ -1,0 +1,56 @@
+/* Subtle motion, with the original layout and content kept intact. */
+body {
+  background-image: radial-gradient(ellipse 45rem 38rem at 85% calc(20% + var(--scroll-glow, 0px)), rgba(151, 200, 100, .09), transparent 70%);
+  background-attachment: fixed;
+}
+.hero-art .art-center {
+  transform: translate(var(--pointer-x, 0px), var(--pointer-y, 0px));
+  transition: transform 500ms cubic-bezier(.2,.8,.2,1), box-shadow 500ms ease;
+  will-change: transform;
+}
+.hero-art .orbit-one {
+  transform: translate(calc(var(--pointer-x, 0px) * -.35), calc(var(--pointer-y, 0px) * -.35));
+  transition: transform 800ms cubic-bezier(.2,.8,.2,1);
+}
+.hero-art:hover .art-center { box-shadow: 0 0 110px #b8ef6955; }
+.project, .skill, .service-list > div, .about-mark { transition: transform 300ms ease, background-color 300ms ease, border-color 300ms ease; }
+.project:hover, .project:focus-within { transform: translateY(-6px); }
+.project-visual { transition: box-shadow 300ms ease; }
+.project:hover .project-visual, .project:focus-within .project-visual { box-shadow: 0 20px 60px #0005; }
+.skill:hover { transform: translateY(-4px); }
+.service-list > div:hover { border-color: #c8fb74; background-color: #c8fb7408; }
+.service-list svg { transition: transform 300ms ease; }
+.service-list > div:hover svg { transform: translateY(-4px) rotate(-6deg); }
+.nav a:not(.nav-cta) { position: relative; }
+.nav a:not(.nav-cta)::after { content: ''; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: #c8fb74; transform: scaleX(0); transform-origin: left; transition: transform 250ms ease; }
+.nav a:hover::after, .nav a:focus-visible::after { transform: scaleX(1); }
+/* Hide only the scrollbar; mouse, touch, keyboard and anchor scrolling remain enabled. */
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+
+.nav a.nav-roll { overflow: hidden; display: inline-block; line-height: 1.5; }
+.nav a.nav-roll::after {
+  content: attr(data-label);
+  position: absolute;
+  inset: 0;
+  height: auto;
+  background: none;
+  color: #c8fb74;
+  transform: translateY(105%);
+  transition: transform 300ms cubic-bezier(.2,.8,.2,1);
+}
+.nav a.nav-roll:hover, .nav a.nav-roll:focus-visible { color: transparent; }
+.nav a.nav-roll:hover::after, .nav a.nav-roll:focus-visible::after { transform: translateY(0); }
+.scroll-entered { animation: section-arrive 700ms cubic-bezier(.2,.8,.2,1) both; }
+@keyframes section-arrive {
+  from { opacity: .55; translate: 0 24px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body { background-attachment: scroll; }
+  .hero-art .art-center, .hero-art .orbit-one, .project:hover, .project:focus-within, .skill:hover, .service-list > div:hover svg { transform: none; }
+  .hero-art .art-center, .hero-art .orbit-one { transition: none; will-change: auto; }
+  .scroll-entered { animation: none; }
+  .nav a.nav-roll:hover, .nav a.nav-roll:focus-visible { color: #c8fb74; }
+  .nav a.nav-roll::after { display: none; }
+}
